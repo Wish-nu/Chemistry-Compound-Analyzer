@@ -22,7 +22,6 @@ A chatbot that analyzes chemical compounds and provides information about compat
 git clone https://github.com/WIshnu/Chemistry-Compound-Analyzer.git
 cd Chemistry-Compound-Analyzer
 
-## Install dependencies:
-npm install
+
 
 
