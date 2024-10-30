@@ -1,0 +1,67 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Compound Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            margin-top: 50px;
+            width: 60%;
+        }
+
+        .compound-info {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .compound-info h2 {
+            margin-top: 0;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Chemistry Compound Analyzer</h1>
+        <input type="text" id="compoundName" placeholder="Enter a compound (e.g., Hydrochloric Acid)">
+        <button onclick="analyzeCompound()">Analyze</button>
+        <div class="compound-info" id="compoundInfo"></div>
+    </div>
+
+    <script>
+        async function analyzeCompound() {
+            const compoundName = document.getElementById("compoundName").value;
+            const response = await fetch(`http://localhost:5000/api/compound/${encodeURIComponent(compoundName)}`);
+            const data = await response.json();
+
+            const compoundInfo = document.getElementById("compoundInfo");
+            if (data.error) {
+                compoundInfo.innerHTML = `<p>Error: ${data.error}</p>`;
+            } else {
+                compoundInfo.innerHTML = `
+                    <h2>Analysis for: ${data.compound}</h2>
+                    <p><span class="label">Description:</span> ${data.description}</p>
+                    <p><span class="label">Compatible Compounds:</span> ${data.compatibleCompounds.join(", ")}</p>
+                    <p><span class="label">Resultant Compound:</span> ${data.resultantCompound}</p>
+                    <p><span class="label">Uses:</span> ${data.uses.join(", ")}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+
+</html>
